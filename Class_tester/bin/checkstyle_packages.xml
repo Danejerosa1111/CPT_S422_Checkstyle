@@ -18,4 +18,29 @@
     <package name="operatorTest">
         <package name="dummysubpackage"/>
     </package>
+    <package name="operandTest">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="commentTest">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="linesOfComments">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="halsteadDifficulty">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="halsteadEffort">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="halsteadVocab">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="halsteadVolume">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="expressionTest">
+        <package name="dummysubpackage"/>
+    </package>
+    
 </checkstyle-packages>

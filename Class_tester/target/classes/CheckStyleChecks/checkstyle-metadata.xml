@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE checkstyle-metadata PUBLIC
+"-//eclipse-cs//DTD Check Metadata 1.1//EN"
+"http://eclipse-cs.sourceforge.net/dtds/checkstyle-metadata_1_1.dtd">
+<checkstyle-metadata>
+    <rule-group-metadata name="My custom checks"  priority="1600">
+        <description>%MyCustomChecks.desc</description>
+
+       <rule-metadata name="%halstead.name" internal-name="HalsteadChecks" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.HalsteadChecks" />
+            <description>%halstead.desc</description>
+        </rule-metadata>
+        
+        
+       <rule-metadata name="%comment.name" internal-name="CommentChecks" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.CommentChecks" />
+            <description>%comment.desc</description>
+        </rule-metadata>
+        
+        <rule-metadata name="%expression.name" internal-name="ExpressionChecks" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.ExpressionChecks" />
+            <description>%expression.desc</description>
+        </rule-metadata>
+        
+        <rule-metadata name="%LinesOfComments.name" internal-name="LinesOfCommentsChecks" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.LinesOfCommentsChecks" />
+            <description>%LinesOfComments.desc</description>
+        </rule-metadata>
+        
+        <rule-metadata name="%Loop.name" internal-name="LoopChecks" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.LoopChecks" />
+            <description>%Loop.desc</description>
+        </rule-metadata>
+        
+        <rule-metadata name="%HalsteadEffort.name" internal-name="HalsteadEffortChecks" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.HalsteadEffortChecks" />
+            <description>%HalsteadEffort.desc</description>
+        </rule-metadata>
+        
+        <rule-metadata name="%HalsteadDifficulty.name" internal-name="HalsteadDifficultyChecks" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.HalsteadDifficultyChecks" />
+            <description>%HalsteadDifficulty.desc</description>
+        </rule-metadata>
+        
+        <rule-metadata name="%HalsteadVocab.name" internal-name="HalsteadVocabChecks" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.HalsteadVocabChecks" />
+            <description>%HalsteadVocab.desc</description>
+        </rule-metadata>
+        
+        <rule-metadata name="%HalsteadVolume.name" internal-name="HalsteadVolumeChecks" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.HalsteadVolumeChecks" />
+            <description>%HalsteadVolume.desc</description>
+        </rule-metadata>
+        
+        <rule-metadata name="%Operand.name" internal-name="OperandChecks" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.OperandChecks" />
+            <description>%Operand.desc</description>
+        </rule-metadata>
+        
+        <rule-metadata name="%Operator.name" internal-name="OperatorChecks" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.OperatorChecks" />
+            <description>%Operator.desc</description>
+        </rule-metadata>
+        
+    </rule-group-metadata>
+</checkstyle-metadata>
