@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE checkstyle-packages PUBLIC
+    "-//Checkstyle//DTD Package Names Configuration 1.0//EN"
+    "http://checkstyle.org/dtds/packages_1_0.dtd">
+
+<checkstyle-packages>
+    <!--
+      Define the Java packages where your custom Checkstyle module classes (checks, filters) reside here.
+      See http://checkstyle.sourceforge.net/config.html#Packages for more info.
+      -->
+    <package name="testerStuff">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="halStead">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="operatorTest">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="operandTest">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="commentTest">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="linesOfComments">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="halsteadDifficulty">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="halsteadEffort">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="halsteadVocab">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="halsteadVolume">
+        <package name="dummysubpackage"/>
+    </package>
+    <package name="expressionTest">
+        <package name="dummysubpackage"/>
+    </package>
+    
+</checkstyle-packages>
