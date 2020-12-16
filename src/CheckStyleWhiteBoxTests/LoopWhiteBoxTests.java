@@ -23,7 +23,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 	@Mock
 	private DetailAST mockAST = mock(DetailAST.class);
 	LoopChecks checker = spy(new LoopChecks());
-	final int ErrorMessage = 0;
+	final int logLine = 0;
 	
 	
 	@Test
@@ -65,9 +65,19 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 	{
 	
 		final String counter = "There are: " + 0 + " loops";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		doNothing().when(checker).log(logLine, counter);
 		checker.finishTree(mockAST);
 		verify(checker).finishTree(mockAST);
+	}
+	
+	@Test
+	public void checkReportingStyleError()
+	{
+		final String logMessage = "There are: " + 0 + " loops";
+		doNothing().when(checker).log(logLine, logMessage);
+		checker.reportStyleError(logLine, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -80,7 +90,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		when(mockAST.branchContains(TokenTypes.DO_WHILE)).thenReturn(false);
 		when(mockAST.branchContains(TokenTypes.LITERAL_FOR)).thenReturn(false);
 		when(mockAST.branchContains(TokenTypes.LITERAL_WHILE)).thenReturn(false);
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 		//checker visits functions
 		checker.beginTree(mockAST);
@@ -91,7 +101,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		verify(checker).visitToken(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumLoops() == numLoops);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
@@ -103,7 +113,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		when(mockAST.branchContains(TokenTypes.DO_WHILE)).thenReturn(true);
 		when(mockAST.branchContains(TokenTypes.LITERAL_FOR)).thenReturn(true);
 		when(mockAST.branchContains(TokenTypes.LITERAL_WHILE)).thenReturn(true);
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 		//checker visits functions
 		checker.beginTree(mockAST);
@@ -114,7 +124,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		verify(checker).visitToken(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumLoops() == numLoops);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -127,7 +137,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		when(mockAST.branchContains(TokenTypes.DO_WHILE)).thenReturn(true);
 		when(mockAST.branchContains(TokenTypes.LITERAL_FOR)).thenReturn(true);
 		when(mockAST.branchContains(TokenTypes.LITERAL_WHILE)).thenReturn(true);
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 		//checker visits functions
 		checker.beginTree(mockAST);
@@ -142,7 +152,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		//verify those the mock has hit those functions with those arguments
 		verify(checker).beginTree(mockAST);
 		verify(checker).finishTree(mockAST);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
@@ -154,7 +164,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		when(mockAST.branchContains(TokenTypes.DO_WHILE)).thenReturn(true);
 		when(mockAST.branchContains(TokenTypes.LITERAL_FOR)).thenReturn(false);
 		when(mockAST.branchContains(TokenTypes.LITERAL_WHILE)).thenReturn(false);
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 		//checker visits functions
 		checker.beginTree(mockAST);
@@ -165,7 +175,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		verify(checker).visitToken(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumLoops() == numLoops);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
@@ -177,7 +187,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		when(mockAST.branchContains(TokenTypes.DO_WHILE)).thenReturn(false);
 		when(mockAST.branchContains(TokenTypes.LITERAL_FOR)).thenReturn(true);
 		when(mockAST.branchContains(TokenTypes.LITERAL_WHILE)).thenReturn(false);
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 		//checker visits functions
 		checker.beginTree(mockAST);
@@ -188,7 +198,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		verify(checker).visitToken(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumLoops() == numLoops);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -201,7 +211,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		when(mockAST.branchContains(TokenTypes.DO_WHILE)).thenReturn(false);
 		when(mockAST.branchContains(TokenTypes.LITERAL_FOR)).thenReturn(false);
 		when(mockAST.branchContains(TokenTypes.LITERAL_WHILE)).thenReturn(true);
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 
 		//checker visits functions
@@ -212,7 +222,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		//verify those the mock has hit those functions with those arguments
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumLoops() == numLoops);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 		
 	}
 	
@@ -222,7 +232,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 	{
 		final int numLoops = 50;
 		final String logMessage = "There are: " + numLoops +" loops";
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		when(mockAST.branchContains(TokenTypes.DO_WHILE)).thenReturn(true);
 		when(mockAST.branchContains(TokenTypes.LITERAL_FOR)).thenReturn(true);
@@ -238,7 +248,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		checker.finishTree(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumLoops() == numLoops);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -247,7 +257,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 	{
 		final int numLoops = 3;
 		final String logMessage = "There are: " + numLoops +" loops";
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		//do while check
@@ -275,7 +285,7 @@ private final int[] tokenizers = new int[] { TokenTypes.DO_WHILE, TokenTypes.LIT
 		checker.finishTree(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumLoops() == numLoops);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	

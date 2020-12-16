@@ -23,7 +23,7 @@ private final int[] tokenizers = new int[] { TokenTypes.EXPR};
 	@Mock
 	private DetailAST mockAST = mock(DetailAST.class);
 	ExpressionChecks checker = spy(new ExpressionChecks());
-	private int ErrorMessage = 0;
+	private int logLine = 0;
 	
 	@Test
 	public void getDefaultTokenCheckeTest() {
@@ -68,10 +68,21 @@ private final int[] tokenizers = new int[] { TokenTypes.EXPR};
 	{
 		final int numExpressions = 0;
 		final String logMessage = "There are: " + numExpressions +" expressions in this program";
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 		checker.finishTree(mockAST);
 		verify(checker).finishTree(mockAST);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
+	}
+	
+	@Test
+	public void checkReportingStyleError()
+	{
+		final int numExpressions = 0;
+		final String logMessage = "There are: " + numExpressions +" expressions in this program";
+		doNothing().when(checker).log(logLine, logMessage);
+		checker.reportStyleError(logLine, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -82,7 +93,7 @@ private final int[] tokenizers = new int[] { TokenTypes.EXPR};
 		final String logMessage = "There are: " + numExpressions +" expressions in this program";
 
 		when(mockAST.branchContains(TokenTypes.EXPR)).thenReturn(false);
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 		//checker visits functions
 		checker.beginTree(mockAST);
@@ -93,7 +104,7 @@ private final int[] tokenizers = new int[] { TokenTypes.EXPR};
 		verify(checker).visitToken(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumExpressions() == 0);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
@@ -103,7 +114,7 @@ private final int[] tokenizers = new int[] { TokenTypes.EXPR};
 		final String logMessage = "There are: " + numExpressions +" expressions in this program";
 
 		when(mockAST.branchContains(TokenTypes.EXPR)).thenReturn(true);
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 		//checker visits functions
 		checker.beginTree(mockAST);
@@ -114,7 +125,7 @@ private final int[] tokenizers = new int[] { TokenTypes.EXPR};
 		verify(checker).visitToken(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumExpressions() == 1);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
@@ -124,7 +135,7 @@ private final int[] tokenizers = new int[] { TokenTypes.EXPR};
 		final String logMessage = "There are: " + numExpressions +" expressions in this program";
 
 		when(mockAST.branchContains(TokenTypes.EXPR)).thenReturn(true);
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 		//checker visits functions
 		checker.beginTree(mockAST);
@@ -138,7 +149,7 @@ private final int[] tokenizers = new int[] { TokenTypes.EXPR};
 		//verify those the mock has hit those functions with those arguments
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumExpressions() == 100);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 
 }

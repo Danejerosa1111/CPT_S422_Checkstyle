@@ -30,7 +30,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 	@Mock
 	private DetailAST mockAST = mock(DetailAST.class);
 	LinesOfCommentsChecks checker = spy(new LinesOfCommentsChecks());
-	private int ErrorMessage = 0;
+	private int logLine = 0;
 	
 	
 	@Test
@@ -73,9 +73,20 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 	
 		final int numLineComments = 0;
 		final String logMessage = "There are: " + numLineComments +" lines of comments in this program";
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 		checker.finishTree(mockAST);
 		verify(checker).finishTree(mockAST);
+	}
+	
+	@Test
+	public void checkReportingStyleError()
+	{
+		final int numLineComments = 0;
+		final String logMessage = "There are: " + numLineComments +" lines of comments in this program";
+		doNothing().when(checker).log(logLine, logMessage);
+		checker.reportStyleError(logLine, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
@@ -88,7 +99,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		when(mockAST.branchContains(TokenTypes.SINGLE_LINE_COMMENT )).thenReturn(false);
 		when(mockAST.branchContains(TokenTypes.BLOCK_COMMENT_BEGIN)).thenReturn(false);
 		when(mockAST.branchContains(TokenTypes.BLOCK_COMMENT_END )).thenReturn(false);
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 		//checker visits functions
 		checker.beginTree(mockAST);
@@ -99,7 +110,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		verify(checker).visitToken(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumLines() == 0);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 		
 	}
 	
@@ -112,7 +123,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		when(mockAST.branchContains(TokenTypes.SINGLE_LINE_COMMENT )).thenReturn(true);
 		when(mockAST.branchContains(TokenTypes.BLOCK_COMMENT_BEGIN)).thenReturn(false);
 		when(mockAST.branchContains(TokenTypes.BLOCK_COMMENT_END )).thenReturn(false);
-		doNothing().when(checker).log(ErrorMessage, logMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 		//checker visits functions
 		checker.beginTree(mockAST);
@@ -124,7 +135,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		verify(checker).visitToken(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumLines() == 1);
-		verify(checker).log(ErrorMessage, logMessage);
+		verify(checker).log(logLine, logMessage);
 		
 	}
 	
@@ -137,7 +148,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		final String logMessage = "There are: " + totalLines + " lines of comments in this program";
 
 		when(mockAST.branchContains(TokenTypes.SINGLE_LINE_COMMENT)).thenReturn(false);
-		doNothing().when(checker).reportStyleError(ErrorMessage, logMessage);
+		doNothing().when(checker).reportStyleError(logLine, logMessage);
 
 		checker.beginTree(mockAST);
 		
@@ -157,7 +168,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		verify(checker).beginTree(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getNumLines() == totalLines);
-		verify(checker).reportStyleError(ErrorMessage, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
 	}
 	
 	
@@ -171,7 +182,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		final String logMessage = "There are: " + totalLines
 				+ " lines of comments in this program";
 
-		doNothing().when(checker).reportStyleError(ErrorMessage, logMessage);
+		doNothing().when(checker).reportStyleError(logLine, logMessage);
 		when(mockAST.branchContains(TokenTypes.SINGLE_LINE_COMMENT)).thenReturn(false);
 
 		//start of the single block comment
@@ -196,7 +207,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		
 		checker.finishTree(mockAST);
 		assertTrue(checker.getNumLines() == totalLines);
-		verify(checker).reportStyleError(ErrorMessage, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
 	}
 	
 	@Test
@@ -208,7 +219,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		final int totalLines = (blockEnd - blockStart) + 1 + singleLineComment;
 		final String logMessage = "There are: " + totalLines + " lines of comments in this program";
 
-		doNothing().when(checker).reportStyleError(ErrorMessage, logMessage);
+		doNothing().when(checker).reportStyleError(logLine, logMessage);
 		when(mockAST.branchContains(TokenTypes.SINGLE_LINE_COMMENT)).thenReturn(false);
 
 		//start of the single block comment
@@ -235,7 +246,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		checker.finishTree(mockAST);
 		verify(checker).beginTree(mockAST);
 		assertTrue(checker.getNumLines() == totalLines);
-		verify(checker).reportStyleError(ErrorMessage, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
 	}
 	
 	@Test
@@ -292,11 +303,11 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		final String logMessage = "There are: " + totalLines + " lines of comments in this program";
 		
 		
-		doNothing().when(checker).reportStyleError(ErrorMessage, logMessage);
+		doNothing().when(checker).reportStyleError(logLine, logMessage);
 		checker.finishTree(mockAST);
 		assertTrue(checker.getNumLines() == totalLines);
 		verify(checker).beginTree(mockAST);
-		verify(checker).reportStyleError(ErrorMessage, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
 	}
 	
 	
@@ -361,11 +372,11 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		final String logMessage = "There are: " + totalLines + " lines of comments in this program";
 		
 		
-		doNothing().when(checker).reportStyleError(ErrorMessage, logMessage);
+		doNothing().when(checker).reportStyleError(logLine, logMessage);
 		checker.finishTree(mockAST);
 		assertTrue(checker.getNumLines() == totalLines);
 		verify(checker).beginTree(mockAST);
-		verify(checker).reportStyleError(ErrorMessage, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
 	}
 	
 	

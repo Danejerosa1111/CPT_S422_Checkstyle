@@ -33,8 +33,6 @@ public class CommentWhiteBoxTests {
 	CommentChecks checker = spy(new CommentChecks());
 	private int logLine = 0;
 	
-	
-	
 	//Functional tests
 	@Test
 	public void getDefaultTokenCheckeTest() {
@@ -79,11 +77,22 @@ public class CommentWhiteBoxTests {
 	public void checkFinishTree()
 	{
 		final int numberOfComments = 0;
-		final String expectedCheckstyleMessage = "There are " + numberOfComments + " comments";
-		doNothing().when(checker).log(logLine, expectedCheckstyleMessage);
+		final String logMessage = "There are " + numberOfComments + " comments";
+		doNothing().when(checker).log(logLine, logMessage);
 		checker.finishTree(mockAST);
 		verify(checker).finishTree(mockAST);
-		verify(checker).log(logLine, expectedCheckstyleMessage);
+		verify(checker).log(logLine, logMessage);
+	}
+	
+	@Test
+	public void checkReportingStyleError()
+	{
+		final int numberOfComments = 0;
+		final String logMessage = "There are " + numberOfComments + " comments";
+		doNothing().when(checker).log(logLine, logMessage);
+		checker.reportStyleError(logLine, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -92,10 +101,10 @@ public class CommentWhiteBoxTests {
 	public void zeroCommentTest() {
 		//init test result
 		final int numberOfComments = 0;
-		final String expectedCheckstyleMessage = "There are " + numberOfComments + " comments";
+		final String logMessage = "There are " + numberOfComments + " comments";
 
 		when(mockAST.branchContains(TokenTypes.COMMENT_CONTENT)).thenReturn(false);
-		doNothing().when(checker).log(logLine, expectedCheckstyleMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 
 		//checker visits functions
 		checker.beginTree(mockAST);
@@ -106,19 +115,19 @@ public class CommentWhiteBoxTests {
 		verify(checker).visitToken(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getTotalComments() == 0);
-		verify(checker).log(logLine, expectedCheckstyleMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
 	public void oneCommentTest() {
 		//init test results
 		final int numComments = 1;
-		final String expectedCheckstyleMessage = "There are " + numComments + " comments";
+		final String logMessage = "There are " + numComments + " comments";
 
 		when(mockAST.branchContains(TokenTypes.COMMENT_CONTENT)).thenReturn(true);
-		doNothing().when(checker).log(logLine, expectedCheckstyleMessage);
+		doNothing().when(checker).log(logLine, logMessage);
 		
-		//checker visits functionschecker.beginTree(mockAST);
+		
 		checker.beginTree(mockAST);
 		checker.visitToken(mockAST);
 		checker.finishTree(mockAST);
@@ -128,7 +137,7 @@ public class CommentWhiteBoxTests {
 		verify(checker).visitToken(mockAST);
 		verify(checker).finishTree(mockAST);
 		assertTrue(checker.getTotalComments() == 1);
-		verify(checker).log(logLine, expectedCheckstyleMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
@@ -156,5 +165,6 @@ public class CommentWhiteBoxTests {
 		assertTrue(checker.getTotalComments() == 100);
 		verify(checker).log(logLine, logMessage);
 	}
-
+	
+	
 }

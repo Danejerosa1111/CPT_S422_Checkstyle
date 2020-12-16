@@ -32,7 +32,7 @@ public class OperandWhiteBoxTests {
 	@Mock
 	private DetailAST mockAST = mock(DetailAST.class);
 	HalsteadChecks checker = spy(new HalsteadChecks());
-	private final int ErrorMessage = 0;
+	private final int logLine = 0;
 	
 	
 	@Test
@@ -74,9 +74,19 @@ public class OperandWhiteBoxTests {
 	{
 
 		final String counter = "There are: " + 0 + " Operands";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		doNothing().when(checker).log(logLine, counter);
 		checker.finishOperandCount();
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, counter);
+	}
+	
+	@Test
+	public void checkReportingStyleError()
+	{
+		final String logMessage = "There are: " + 0 + " Operands";
+		doNothing().when(checker).log(logLine, logMessage);
+		checker.reportStyleError(logLine, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
@@ -84,7 +94,7 @@ public class OperandWhiteBoxTests {
 	{
 		final int numOperands = 0;
 		final String counter = "There are: " + numOperands + " Operands";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		doNothing().when(checker).log(logLine, counter);
 		for(int i = 0; i < tokenizers.length; i++)
 		{
 			when(mockAST.branchContains(tokenizers[i])).thenReturn(false);
@@ -96,7 +106,7 @@ public class OperandWhiteBoxTests {
 
 
 		assertTrue(checker.getOperandCount() == numOperands);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, counter);
 		
 	}
 	
@@ -105,8 +115,8 @@ public class OperandWhiteBoxTests {
 	public void oneOperandsTest()
 	{
 		final int numOperands = 1;
-		final String counter = "There are: " + numOperands + " Operands";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "There are: " + numOperands + " Operands";
+		doNothing().when(checker).log(logLine, logMessage);
 		for(int i = 0; i < tokenizers.length; i++)
 		{
 			when(mockAST.branchContains(tokenizers[i])).thenReturn(true);
@@ -118,7 +128,7 @@ public class OperandWhiteBoxTests {
 
 
 		assertTrue(checker.getOperandCount() == numOperands);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 		
 	}
 	
@@ -126,8 +136,8 @@ public class OperandWhiteBoxTests {
 	public void oneHundredOperandsTest()
 	{
 		final int numOperands = 100;
-		final String counter = "There are: " + numOperands + " Operands";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "There are: " + numOperands + " Operands";
+		doNothing().when(checker).log(logLine, logMessage);
 		for(int i = 0; i < tokenizers.length; i++)
 		{
 			when(mockAST.branchContains(tokenizers[i])).thenReturn(true);
@@ -141,7 +151,7 @@ public class OperandWhiteBoxTests {
 		checker.finishOperandCount();
 		//System.out.println(checker.getOperandCount());
 		assertTrue(checker.getOperandCount() == numOperands);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -149,8 +159,8 @@ public class OperandWhiteBoxTests {
 	public void oneUniqueOperandsTest()
 	{
 		final int numOperands = 1;
-		final String counter = "There are: " + numOperands + " Operands";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "There are: " + numOperands + " Operands";
+		doNothing().when(checker).log(logLine, logMessage);
 		for(int i = 1; i < tokenizers.length; i++)
 		{
 			when(mockAST.branchContains(tokenizers[i])).thenReturn(false);
@@ -165,15 +175,15 @@ public class OperandWhiteBoxTests {
 		checker.finishUniqueOperandCount();
 		//System.out.println(checker.getOperandCount());
 		assertTrue(checker.getUniqueOperands() == numOperands);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
 	public void oneHundredUniqueOperandsTest()
 	{
 		final int numOperands = 100;
-		final String counter = "There are: " + 1 + " Operands";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "There are: " + 1 + " Operands";
+		doNothing().when(checker).log(logLine, logMessage);
 		for(int i = 1; i < tokenizers.length; i++)
 		{
 			when(mockAST.branchContains(tokenizers[i])).thenReturn(false);
@@ -188,7 +198,7 @@ public class OperandWhiteBoxTests {
 		checker.finishUniqueOperandCount();
 		//System.out.println(checker.getOperandCount());
 		assertTrue(checker.getUniqueOperands() == 1);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 }

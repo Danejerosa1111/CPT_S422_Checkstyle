@@ -57,5 +57,7 @@ public class CommentChecks extends AbstractCheck {
 	{
 		return numComments;
 	}
+	
+	
 
 }

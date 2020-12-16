@@ -39,7 +39,7 @@ public class HalsteadWhiteBoxTest {
 	@Mock
 	private DetailAST mockAST = mock(DetailAST.class);
 	HalsteadChecks checker = spy(new HalsteadChecks());
-	private final int ErrorMessage = 0;
+	private final int logLine = 0;
 	
 	
 	@Test
@@ -81,9 +81,19 @@ public class HalsteadWhiteBoxTest {
 	public void testFinishTree()
 	{
 		final String count = "The halstead length is: " + 0;
-		doNothing().when(checker).log(ErrorMessage, count);
+		doNothing().when(checker).log(logLine, count);
 		checker.finishTree(mockAST);
 		verify(checker).finishTree(mockAST);
+	}
+	
+	@Test
+	public void checkReportingStyleError()
+	{
+		final String logMessage = "The halstead length is: " + 0;
+		doNothing().when(checker).log(logLine, logMessage);
+		checker.reportStyleError(logLine, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
@@ -92,8 +102,8 @@ public class HalsteadWhiteBoxTest {
 		final int numOperators = 0;
 		final int numOperands = 0;
 		
-		final String count = "The halstead length is: " + (numOperators + numOperands);
-		doNothing().when(checker).log(ErrorMessage, count);
+		final String logMessage = "The halstead length is: " + (numOperators + numOperands);
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		for(int i = 0; i < tokenizers.length; i++)
 		{
@@ -105,7 +115,7 @@ public class HalsteadWhiteBoxTest {
 		checker.visitToken(mockAST);
 		checker.finishTree(mockAST);
 		assertTrue(checker.getHalsteadLength() == (numOperators + numOperands));
-		verify(checker).log(ErrorMessage, count);
+		verify(checker).log(logLine, logMessage);
 		
 	}
 	
@@ -116,8 +126,8 @@ public class HalsteadWhiteBoxTest {
 		final int numOperators = 1;
 		final int numOperands = 0;
 		
-		final String count = "The halstead length is: " + (numOperators + numOperands);
-		doNothing().when(checker).log(ErrorMessage, count);
+		final String logMessage = "The halstead length is: " + (numOperators + numOperands);
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		checker.beginTree(mockAST);
 		for(int i = 0; i < tokenizers.length; i++)
@@ -134,7 +144,7 @@ public class HalsteadWhiteBoxTest {
 		checker.visitToken(mockAST);
 		checker.finishTree(mockAST);
 		assertTrue(checker.getHalsteadLength() == (numOperators + numOperands));
-		verify(checker).log(ErrorMessage, count);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -145,7 +155,7 @@ public class HalsteadWhiteBoxTest {
 		final int numOperands = 1;
 		
 		final String count = "The halstead length is: " + (numOperators + numOperands);
-		doNothing().when(checker).log(ErrorMessage, count);
+		doNothing().when(checker).log(logLine, count);
 		checker.beginTree(mockAST);
 		for(int i = 0; i < tokenizers.length; i++)
 		{
@@ -161,7 +171,7 @@ public class HalsteadWhiteBoxTest {
 		checker.visitToken(mockAST);
 		checker.finishTree(mockAST);
 		assertTrue(checker.getHalsteadLength() == (numOperators + numOperands));
-		verify(checker).log(ErrorMessage, count);
+		verify(checker).log(logLine, count);
 	}
 	
 	@Test
@@ -170,8 +180,8 @@ public class HalsteadWhiteBoxTest {
 		final int numOperators = 1;
 		final int numOperands = 1;
 		
-		final String count = "The halstead length is: " + (numOperators + numOperands);
-		doNothing().when(checker).log(ErrorMessage, count);
+		final String logMessage = "The halstead length is: " + (numOperators + numOperands);
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -200,7 +210,7 @@ public class HalsteadWhiteBoxTest {
 
 		checker.finishTree(mockAST);
 		assertTrue(checker.getHalsteadLength() == (numOperators + numOperands));
-		verify(checker).log(ErrorMessage, count);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -210,8 +220,8 @@ public class HalsteadWhiteBoxTest {
 		final int numOperators = 1;
 		final int numOperands = 33;
 		
-		final String count = "The halstead length is: " + (numOperators + numOperands);
-		doNothing().when(checker).log(ErrorMessage, count);
+		final String logMessage = "The halstead length is: " + (numOperators + numOperands);
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -248,7 +258,7 @@ public class HalsteadWhiteBoxTest {
 		//System.out.println(checker.getOperatorCount());
 		checker.finishTree(mockAST);
 		assertTrue(checker.getHalsteadLength() == (numOperators + numOperands));
-		verify(checker).log(ErrorMessage, count);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
@@ -257,8 +267,8 @@ public class HalsteadWhiteBoxTest {
 		final int numOperators = 72;
 		final int numOperands = 1;
 		
-		final String count = "The halstead length is: " + (numOperators + numOperands);
-		doNothing().when(checker).log(ErrorMessage, count);
+		final String logMessage = "The halstead length is: " + (numOperators + numOperands);
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -293,7 +303,7 @@ public class HalsteadWhiteBoxTest {
 		//System.out.println(checker.getOperatorCount());
 		checker.finishTree(mockAST);
 		assertTrue(checker.getHalsteadLength() == (numOperators + numOperands));
-		verify(checker).log(ErrorMessage, count);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
@@ -302,8 +312,8 @@ public class HalsteadWhiteBoxTest {
 		final int numOperators = 38;
 		final int numOperands = 25;
 		
-		final String count = "The halstead length is: " + (numOperators + numOperands);
-		doNothing().when(checker).log(ErrorMessage, count);
+		final String logMessage = "The halstead length is: " + (numOperators + numOperands);
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -341,7 +351,7 @@ public class HalsteadWhiteBoxTest {
 		//System.out.println(checker.getOperatorCount());
 		checker.finishTree(mockAST);
 		assertTrue(checker.getHalsteadLength() == (numOperators + numOperands));
-		verify(checker).log(ErrorMessage, count);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -352,8 +362,8 @@ public class HalsteadWhiteBoxTest {
 		final int numOperators = 1;
 		final int numOperands = 1;
 		
-		final String counter = "the halstead vocab is: " + 2;
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "the halstead vocab is: " + 2;
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -382,7 +392,7 @@ public class HalsteadWhiteBoxTest {
 		
 		checker.finishVocabCount();
 		assertTrue(checker.getHalsteadVocab() == 2);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -392,8 +402,8 @@ public class HalsteadWhiteBoxTest {
 		final int numOperators = 3;
 		final int numOperands = 1;
 		
-		final String counter = "the halstead vocab is: " + (numOperators + numOperands);
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "the halstead vocab is: " + (numOperators + numOperands);
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -431,7 +441,7 @@ public class HalsteadWhiteBoxTest {
 		
 		checker.finishVocabCount();
 		assertTrue(checker.getHalsteadVocab() == 4);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -444,7 +454,7 @@ public class HalsteadWhiteBoxTest {
 		final int numOperands = 4;
 		
 		final String counter = "the halstead vocab is: " + (numOperators + numOperands);
-		doNothing().when(checker).log(ErrorMessage, counter);
+		doNothing().when(checker).log(logLine, counter);
 		
 		
 		checker.beginTree(mockAST);
@@ -483,7 +493,7 @@ public class HalsteadWhiteBoxTest {
 		
 		checker.finishVocabCount();
 		assertTrue(checker.getHalsteadVocab() == 5);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, counter);
 	}
 	
 	
@@ -493,8 +503,8 @@ public class HalsteadWhiteBoxTest {
 		final int numOperators = 9;
 		final int numOperands = 3;
 		
-		final String counter = "the halstead vocab is: " + (numOperators + numOperands);
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "the halstead vocab is: " + (numOperators + numOperands);
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -532,7 +542,7 @@ public class HalsteadWhiteBoxTest {
 		}
 		
 		checker.finishVocabCount();
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	//--------------------------------------------------Halstead Difficulty--------------------------------------------------------
@@ -543,8 +553,8 @@ public class HalsteadWhiteBoxTest {
 	{
 		int numOperators = 3;
 		int halsteadDiffuculty = 0;
-		final String counter = "the halstead difficulty is: " + halsteadDiffuculty;
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "the halstead difficulty is: " + halsteadDiffuculty;
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -565,7 +575,7 @@ public class HalsteadWhiteBoxTest {
 		
 		checker.finishDifficultyCount();
 		assertTrue(checker.getHalsteadDifficulty() == 0);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 		
 	}
 	
@@ -575,8 +585,8 @@ public class HalsteadWhiteBoxTest {
 		int numOperands = 14;
 		int numOperatorsSize = 3;
 		int halsteadDiffuculty = (numOperatorsSize/2)*numOperands/numOperatorsSize;
-		final String counter = "the halstead difficulty is: " + halsteadDiffuculty;
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "the halstead difficulty is: " + halsteadDiffuculty;
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -608,7 +618,7 @@ public class HalsteadWhiteBoxTest {
 		
 		checker.finishDifficultyCount();
 		assertTrue(checker.getHalsteadDifficulty() == halsteadDiffuculty);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 		
 	}
 	
@@ -631,8 +641,8 @@ public class HalsteadWhiteBoxTest {
 		int numOperatorsSize = 3;
 		int numOperandsSize = 2;
 		int halsteadVolume = (numOperands + numOperators)*log2(numOperatorsSize + numOperandsSize);
-		final String counter = "the halstead volume is: " + halsteadVolume;;
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "the halstead volume is: " + halsteadVolume;;
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -678,7 +688,7 @@ public class HalsteadWhiteBoxTest {
 		
 		checker.finishVolumeCount();
 		assertTrue(checker.getHalsteadVolume() == halsteadVolume);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
@@ -689,8 +699,8 @@ public class HalsteadWhiteBoxTest {
 	{
 
 		int halsteadEffort = 0;
-		final String counter = "the halstead effort is: " + halsteadEffort;
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "the halstead effort is: " + halsteadEffort;
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -706,7 +716,7 @@ public class HalsteadWhiteBoxTest {
 		}
 		checker.finishEffortCount();
 		assertTrue(checker.getHalsteadEffort() == halsteadEffort);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 		
 	}
 	
@@ -723,8 +733,8 @@ public class HalsteadWhiteBoxTest {
 		int halsteadVolume = (numOperands + numOperators)*log2(numOperatorsSize + numOperandsSize);
 		int difficulty = numOperatorsSize/2*numOperands/numOperatorsSize;
 		int halsteadEffort = halsteadVolume*difficulty;
-		final String counter = "the halstead effort is: " + halsteadEffort;
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "the halstead effort is: " + halsteadEffort;
+		doNothing().when(checker).log(logLine, logMessage);
 		
 		
 		checker.beginTree(mockAST);
@@ -768,7 +778,7 @@ public class HalsteadWhiteBoxTest {
 		}
 		checker.finishEffortCount();
 		assertTrue(checker.getHalsteadEffort() == halsteadEffort);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 		
 	}
 

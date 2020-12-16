@@ -38,7 +38,7 @@ public class OperatorWhiteBoxTests {
 	@Mock
 	private DetailAST mockAST = mock(DetailAST.class);
 	HalsteadChecks checker = spy(new HalsteadChecks());
-	private final int ErrorMessage = 0;
+	private final int logLine = 0;
 	
 	
 	@Test
@@ -80,19 +80,30 @@ public class OperatorWhiteBoxTests {
 	{
 		
 		final int numOperators = 0;
-		final String counter = "There are: " + numOperators + " Operators";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "There are: " + numOperators + " Operators";
+		doNothing().when(checker).log(logLine, logMessage);
 		checker.finishOperatorCount();
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 		
+	}
+	
+	@Test
+	public void checkReportingStyleError()
+	{
+		final int numOperators = 0;
+		final String logMessage = "There are: " + numOperators + " Operators";
+		doNothing().when(checker).log(logLine, logMessage);
+		checker.reportStyleError(logLine, logMessage);
+		verify(checker).reportStyleError(logLine, logMessage);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
 	public void noOperatorTest()
 	{
 		final int numOperators = 0;
-		final String counter = "There are: " + numOperators + " Operators";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "There are: " + numOperators + " Operators";
+		doNothing().when(checker).log(logLine, logMessage);
 		for(int i = 0; i < tokenizers.length; i++)
 		{
 			when(mockAST.branchContains(tokenizers[i])).thenReturn(false);
@@ -104,7 +115,7 @@ public class OperatorWhiteBoxTests {
 
 
 		assertTrue(checker.getOperatorCount() == numOperators);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 		
 	}
 	
@@ -113,8 +124,8 @@ public class OperatorWhiteBoxTests {
 	public void oneOperatorTest()
 	{
 		final int numOperator = 1;
-		final String counter = "There are: " + numOperator + " Operators";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "There are: " + numOperator + " Operators";
+		doNothing().when(checker).log(logLine, logMessage);
 		for(int i = 0; i < tokenizers.length; i++)
 		{
 			when(mockAST.branchContains(tokenizers[i])).thenReturn(true);
@@ -126,7 +137,7 @@ public class OperatorWhiteBoxTests {
 
 		
 		assertTrue(checker.getOperatorCount() == numOperator);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 		
 	}
 	
@@ -134,8 +145,8 @@ public class OperatorWhiteBoxTests {
 	public void oneHundredOperatorTest()
 	{
 		final int numOperator = 100;
-		final String counter = "There are: " + numOperator + " Operators";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "There are: " + numOperator + " Operators";
+		doNothing().when(checker).log(logLine, logMessage);
 		for(int i = 0; i < tokenizers.length; i++)
 		{
 			when(mockAST.branchContains(tokenizers[i])).thenReturn(true);
@@ -146,18 +157,18 @@ public class OperatorWhiteBoxTests {
 			checker.visitToken(mockAST);
 		}
 		
-		//System.out.println(checker.getOperatorCount());
+
 		checker.finishOperatorCount();
 		assertTrue(checker.getOperatorCount() == numOperator);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
 	public void uniqueOperatorTest()
 	{
 		final int numOperator = 1;
-		final String counter = "There are: " + numOperator + " Operators";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "There are: " + numOperator + " Operators";
+		doNothing().when(checker).log(logLine, logMessage);
 		for(int i = 0; i < tokenizers.length; i++)
 		{
 			when(mockAST.branchContains(tokenizers[i])).thenReturn(true);
@@ -171,15 +182,15 @@ public class OperatorWhiteBoxTests {
 		//System.out.println(checker.getUniqueOperators());
 		checker.finishUniqueOperatorCount();
 		assertTrue(checker.getUniqueOperators() == numOperator);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	@Test
 	public void uniqueOperatorInputTest()
 	{
 		final int numOperator = 100;
-		final String counter = "There are: " + 1 + " Operators";
-		doNothing().when(checker).log(ErrorMessage, counter);
+		final String logMessage = "There are: " + 1 + " Operators";
+		doNothing().when(checker).log(logLine, logMessage);
 		for(int i = 0; i < tokenizers.length; i++)
 		{
 			when(mockAST.branchContains(tokenizers[i])).thenReturn(false);
@@ -194,7 +205,7 @@ public class OperatorWhiteBoxTests {
 		
 		checker.finishUniqueOperatorCount();
 		assertTrue(checker.getUniqueOperators() == 1);
-		verify(checker).log(ErrorMessage, counter);
+		verify(checker).log(logLine, logMessage);
 	}
 	
 	
