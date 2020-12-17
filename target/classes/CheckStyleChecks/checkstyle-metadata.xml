@@ -61,6 +61,10 @@
             <alternative-name internal-name="CheckStyleChecks.OperatorChecks" />
             <description>%Operator.desc</description>
         </rule-metadata>
+        <rule-metadata name="%MissingCtor.name" internal-name="MissingCtor" parent="TreeWalker">
+            <alternative-name internal-name="CheckStyleChecks.MissingCtor" />
+            <description>%MissingCtor.desc</description>
+        </rule-metadata>
         
     </rule-group-metadata>
 </checkstyle-metadata>

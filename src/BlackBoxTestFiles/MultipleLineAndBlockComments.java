@@ -4,6 +4,9 @@ public class MultipleLineAndBlockComments {
 	
 	//Dane
 	
+	/*Dane*/
+	//Dane
+	
 	/*
 	 * Hello
 	 * Dude

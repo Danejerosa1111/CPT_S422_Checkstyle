@@ -146,5 +146,28 @@ public class LineCommentBlackBoxTests {
 		System.out.println("Single Line Comment Check Done!");
 	}
 	
+	@Test
+	public void singleSingleLinesCommentst() throws CheckstyleException {
+		//result check
+		final int commentLinesInBlock = 16;
+		final String logMessage = "There are: " + commentLinesInBlock + " lines of comments in this program";
+		
+		String pathname = "src/BlackBoxTestFiles/MultipleLineAndBlockComments.java";
+		
+		runner = new TestRunner(pathname, checker);
+		runner.getConfigurations();
+		runner.walk();
+		
+		//System.out.println(checker.getNumLines());
+		//System.out.println(commentLinesInBlock);
+		
+		assertTrue(commentLinesInBlock == checker.getNumLines());
+		for(LocalizedMessage lm : checker.getMessages()) {
+			//System.out.println(lm.getMessage());
+			assertTrue(lm.getMessage().equals(logMessage));
+		}
+		System.out.println("Single Line Comment Check Done!");
+	}
+	
 	
 }

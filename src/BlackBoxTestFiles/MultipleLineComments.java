@@ -5,10 +5,14 @@ public class MultipleLineComments {
 	//Whatup
 	
 	
+	public void test()
+	{
+		//Its me
+	}
 	
-	//Its me
 	
 	
-	//Dane
+	
 
-}
+}//Dane
+

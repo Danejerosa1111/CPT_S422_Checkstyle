@@ -124,6 +124,7 @@ private final int[] tokenizers = new int[] {TokenTypes.SINGLE_LINE_COMMENT, Toke
 		when(mockAST.branchContains(TokenTypes.BLOCK_COMMENT_BEGIN)).thenReturn(false);
 		when(mockAST.branchContains(TokenTypes.BLOCK_COMMENT_END )).thenReturn(false);
 		doNothing().when(checker).log(logLine, logMessage);
+		
 
 		//checker visits functions
 		checker.beginTree(mockAST);

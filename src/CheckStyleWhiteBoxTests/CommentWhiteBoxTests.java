@@ -73,6 +73,7 @@ public class CommentWhiteBoxTests {
 		verify(checker).visitToken(mockAST);
 	}
 	
+	
 	@Test
 	public void checkFinishTree()
 	{

@@ -116,6 +116,16 @@ public class HalsteadChecks extends AbstractCheck {
 		final int lineMessage = 0;
 		halsteadLength = getOperatorCount() + getOperandCount();
 		final String count = "The halstead length is: " + halsteadLength;
+		
+		//finishOperatorCount();
+		//finishOperandCount();
+		//finishUniqueOperandCount();
+		//finishUniqueOperatorCount();
+		//finishVocabCount();
+		//finishDifficultyCount();
+		//finishVolumeCount();
+		//finishEffortCount();
+		
 		reportStyleError(lineMessage, count);
 	}
 	
